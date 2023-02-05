@@ -1,0 +1,54 @@
+---
+- name: Install apache2
+  apt:
+          name: apache2
+          state: latest
+- name: Create Document root
+  file:
+          path: "/var/www/{{ http_host }}"
+          state: directory
+          owner: "{{ app_user }}"
+          mode: 0755
+
+- name: setup Apache vhost
+  template:
+          src: "apache.conf.j2"
+          dest: "/etc/apache2/sites-available/{{ http_conf }}"
+          notify: Reload Apache
+
+- name: Enable Apache site
+  shell: /usr/sbin/a2ensite {{ http_conf }}
+  notify: Reload Apache
+
+- name: Disable Apache default site
+  shell: /usr/sbin/a2dissite 000-default.conf
+  when: disable_default
+  notify: Restart Apache
+
+- name: clone project repo to site
+  git:
+          repo: https://github.com/EjiroLaurelD/hostname-project
+          dest: "/var/www/{{ repo_name }}"
+          clone: yes
+          update: yes
+          force: yes
+ 
+- name: change owner of site repo
+  become: true
+  file:
+          path: "/var/www/{{ repo_name }}"
+          state: directory
+          owner: "{{ app_user }}"
+          group: "{{ app_user }}"
+          mode: '0775'
+          recurse: yes
+
+- name: copy index.php to site
+  template:
+          src: index.php
+          dest: /var/www/html
+          mode: '0755'
+          owner: "{{ app_user }}"
+          group: "{{ app_user }}"
+  
+

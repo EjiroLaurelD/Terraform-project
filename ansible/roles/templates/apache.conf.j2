@@ -1,0 +1,19 @@
+<VirtualHost *:{{ http_port }}>
+    ServerAdmin admin@{{ http_hosts }}
+    ServerName {{ http_hosts }}
+    ServerAlias www.{{ http_hosts }}
+    DocumentRoot /var/www/exam-project/laravelapp/public
+    ErrorLog ${APACHE_LOG_DIR}/{{ http_hosts }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ http_hosts }}_access.log combined
+
+
+    <Directory /var/www/exam-project/laravelapp/public>
+        Options +FollowSymlinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    <ifModule mod_dir.c>
+        DirectoryIndex index.php index.html index.xhtml
+    </ifModule>
+</VirtualHost>

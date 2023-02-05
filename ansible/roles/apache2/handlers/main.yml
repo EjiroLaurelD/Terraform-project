@@ -1,0 +1,17 @@
+- name: apache2 service started
+  become: true
+  service:
+    name: apache2
+    state: started
+
+- name: apache2 service enabled
+  become: true
+  service:
+    name: apache2
+    enabled: true
+
+- name: apache2 service restart
+  become: true
+  service:
+    name: apache2
+    state: restarted

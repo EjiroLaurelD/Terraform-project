@@ -1,0 +1,21 @@
+---
+- name: Install software-properties-common
+  apt: name=software-properties-common
+  tags: php
+
+- name: Install ondrej php repository
+  apt_repository:
+          repo: "{{ php_repo }}"
+          update_cache: yes
+  tags: php
+
+- name: Install php and its dependencies
+  apt:
+          name:
+                  - php
+                  - libapache2-mod-php
+                  - python3-pymysql
+                  - openssl
+          state: present
+          update_cache: yes
+  tags: php

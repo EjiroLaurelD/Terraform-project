@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+          - name: install prerequisite
+            apt: name={{ item }} state=latest force_apt_get=yes update_cache=true
+            loop: ['aptitude']
+  vars_files:
+          - vars/var.yml          
+  roles:
+          - base
+          - apache2
+          - php
+         
+       
+  handlers:
+          - name: restart apache2
+            become: true
+            service:
+                    name: apache2
+                    state: restarted
+          
+                    

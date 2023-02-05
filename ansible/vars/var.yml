@@ -1,0 +1,12 @@
+---
+
+app_user: "www-data"
+repo_name: "hostname-proj"
+http_host: "ejirolaureld.live"
+http_conf: "ejirolaureld.live.conf"
+www_host: "www.ejirolaureld.live"
+php_repo: "ppa:ondrej/php"
+domain: "ejirolaureld.me"
+domain_alias: "www.ejirolaureld.me"
+http_port: "80"
+disable_default: true

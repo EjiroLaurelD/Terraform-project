@@ -1,0 +1,12 @@
+**/.terraform/*
+#state files
+*.tfstate
+.tf.state.
+
+# crash log files
+*.log
+
+#sensitivedata
+*.cer
+*.terraform.lock.hcl
+*.tfvars
